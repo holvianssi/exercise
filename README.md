@@ -32,15 +32,17 @@ Django Rest Framework:
      see best for this use case.
   3. Implement an API to POST a new transaction on account.
      You should prevent posting withdrawal transactions if doing so
-     results in negative account balance. This operation should
-     update the account's balance so that it never goes out of sync
-     with the balance calculated from transaction listing.
+     results in negative account balance. Note that account balance
+     must be in sync with transactions on the account.
   4. Implement a management command to load some data to the system.
   5. Implement tests for the APIs you have built.
 
 We appreciate if you follow Python's and Django's typical code conventions
-for your source code, API design and testing setup. Of course, the solution
-should be easy to understand.
+for your source code, API design and testing setup.
+
+Include a small document where you explain how to set up, run and test the
+system. There will be a review session afterwards where you can explain your
+solution in detail.
 
 
 Optional tasks
@@ -51,19 +53,23 @@ of the additional tasks is to allow you to show your skillset a bit more. If
 you feel you know a bit more than the usual candidate about some of below
 tasks, do let us know by completing the task!
 
+Descriptions can be done either in written form or as part of the review
+session for your submission.
+
 Client & features: 
-  1. Implement single page app UI for above APIs
-  2. Implement console based client for above APIs
-  3. Implement operations access to the system (this should allow operations
-     to view details of users, accounts and transactions, and to do
-     corrections to transactions data).
+  1. Implement a web frontend for the APIs. Usage of some Javascript
+     framework is a big bonus for this task.
+  2. Implement console based client for the APIs.
+  3. Implement operations personnel access to the system. The system should
+     allow operations to find and view details of users, accounts and
+     transactions, and to do corrections to the data.
   4. Implement a change to the account balance API so that it's possible
      to query the balance of the account at end of given date.
 
 Authentication and audit:
   1. Describe or implement authentication and authorisation solution for above
      APIs.
-  2. Describe or implement an audit system for above APIs (basically a solution
+  2. Describe or implement an audit system for above APIs (a solution
      which allows one to see who did what in the system).
 
 Concurrency, scalability, reliability:
@@ -72,9 +78,14 @@ Concurrency, scalability, reliability:
      on single account. What if the system would need to scale to tens of
      millions of users, each with million transactions on an account?
   2. Describle or implement changes to make the system reliable against
-     concurrent POSTing of transactions to an account. 
-  3. Assume you already have a million users each with multipe accounts in the
-     system. Describe or implement changes to add a new field currency to the
+     concurrent POSTing of transactions to an account.
+  3. An external system posts transactions to the system. As part of the
+     data posted there's an "external_transaction_id" field which is
+     guaranteed to be unique in the external system. Describe or implement
+     changes to the API so that it works great for this use case (think of
+     the case where the external system posts the same data twice).
+  4. Assume you already have a million users each with multipe accounts in the
+     system. Describe or implement changes to add a new field "currency" to the
      Account model. The field should default to 'EUR'. In which order database
      migrations, code releases and other possible operations should be applied
      if we want to keep the system running all the time without interruptions.
@@ -93,4 +104,4 @@ Bookkeeping:
   1. Describe what it would mean to have a double entry bookkeeping system
      instead of the current single entry system. What would it imply on the
      data model side? Why would one want to use such a system for a bank
-     in general?
+     account in general?
