@@ -1,4 +1,6 @@
+from decimal import Decimal
 from django.db import models
+from django.db import db_transaction
 import uuid
 
 
@@ -17,6 +19,36 @@ class Account(models.Model):
     name = models.CharField(max_length=20)
     balance = models.DecimalField(max_digits=15, decimal_places=2)
     user = models.ForeignKey('auth.User', on_delete=models.PROTECT)
+
+    @classmethod
+    def create_account(self, user, name):
+        return Account.objects.create(user=user, name=name, balance=0)
+
+    @db_transaction.atomic
+    def record_transaction(self, transaction_date, amount, description=''):
+        locked_account = Account.objects.select_for_update().get(
+            uuid=self.uuid)
+        if locked_account.balance + amount < 0:
+            raise ValueError(
+                "Recording transaction would lead to negative balance!")
+        locked_account.balance += amount
+        locked_account.save()
+        transaction = Transaction.objects.create(
+            account=self, transaction_date=transaction_date,
+            amount=amount, description=description,
+            active=True
+        )
+        return transaction
+
+    def get_balance(self, date=None):
+        if date is None:
+            return self.balance
+        else:
+            return self.transactions.filter(
+                active=True, transaction_date__lt=date
+            ).aggregate(
+                amount=models.Sum('amount')
+            )['amount'] or Decimal(0)
 
 
 class Transaction(models.Model):
