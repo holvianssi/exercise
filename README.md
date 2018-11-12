@@ -4,7 +4,7 @@ Holvi transaction API exercise
 Welcome to Holvi transactions API exercise!
 
 In this exercise, you'll implement an API for recording transactions to
-simple bank accounts. A skeleton Django project is provided, but rest is
+simple bank accounts. A skeleton Django project is provided, but the rest is
 up to you.
 
 To get the app running, you should install Python 3.6.x and Django 2.1.x
@@ -31,7 +31,7 @@ Django Rest Framework:
      see best for this use case.
   3. Implement an API to POST a new transaction to account.
      You should prevent withdrawal transactions if recording the
-     transaction would retuls in negative account balance. Note that
+     transaction would return in negative account balance. Note that
      the operation should be recorded atomically. That is, the transaction
      listing and account balance shouldn't go out of sync.
   4. Implement a management command to load some users, accounts and
@@ -78,16 +78,16 @@ Concurrency, scalability, reliability:
      of users. Some of the users could have very large number of transactions
      on single account.
      What if the system would need to scale to tens of millions of users,
-     each with million transactions on an account?
-  2. Describle or implement changes to make the system work correctly if
+     each with millions of transactions on an account?
+  2. Describe or implement changes to make the system work correctly if
      there are concurrent POSTing of transactions to one account.
   3. Assume an external system posts transactions to the system. As part of
-     the data posted there's an "source_transaction_id" field which is
+     the data posted there's a "source_transaction_id" field which is
      guaranteed to be unique in the external system. Describe or implement
      changes to the API and data model so that it works great for this use
      case (think of the case where the external system posts the same data
      twice).
-  4. Assume you have a large amount of accounts system. Describe or implement
+  4. Assume you have a large amount of accounts in the system. Describe or implement
      changes to add a new field "currency" to the Account model. The field
      should default to 'EUR'. In which order database migrations, code
      releases and other possible operations should be applied if we want to
@@ -97,7 +97,7 @@ Concurrency, scalability, reliability:
 
 Devops:
   1. Make the application run in a Docker container.
-  2. Descrbie how you would implement CI for the application.
+  2. Descrbe how you would implement CI for the application.
   3. Assume you would need to deploy the application in AWS. Which AWS features
      would you use to get the app running? How would you do the deployment?
 
